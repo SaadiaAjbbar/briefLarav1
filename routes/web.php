@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\QuestionController;
-
+use App\Http\Controllers\ResponseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 });
+//createResp
+Route::post('/createResp',[ResponseController::class,'create'])->name('responses.create');
+
+Route::post('/questions/{id}/favorite', [FavoriteController::class, 'toggle'])
+    ->middleware('auth')
+    ->name('questions.favorite');

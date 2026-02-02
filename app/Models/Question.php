@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    
     protected $fillable = ['title', 'content', 'user_id'];
 
     public function user()
@@ -17,4 +18,10 @@ class Question extends Model
     {
         return $this->hasMany(Response::class);
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
 }

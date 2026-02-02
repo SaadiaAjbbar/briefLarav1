@@ -1,20 +1,30 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Question;
+use App\Models\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class Response extends Model
+class ResponseController extends Controller
 {
-    protected $fillable = ['content', 'user_id', 'question_id'];
+   
+    public function create(Request $request){
+        $request->validate([
+            'content'=> 'required|string',
+            ]
+        );
+        
+        Response::create(
+            [
+            'question_id'=>$request->question_id,
+            'content'=>$request->content,
+            'user_id'=>Auth::id()
+            ]
+            
+        );
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function question()
-    {
-        return $this->belongsTo(Question::class);
+        return redirect()->route('questions.index');
     }
 }
