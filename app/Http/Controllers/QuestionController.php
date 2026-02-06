@@ -35,4 +35,11 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')
             ->with('success', 'Question ajoutée avec succès');
     }
+
+    public function show(Question $question)
+    {
+        $question->load('responses.user');
+
+        return view('questions.show', ['question'=>$question]);
+    }
 }

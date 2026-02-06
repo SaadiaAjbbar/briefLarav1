@@ -7,20 +7,15 @@
 </div>
 
 @foreach($questions as $question)
-<div class="card mb-3">
-    <div class="card-body">
-        <h5>{{ $question->title }}</h5>
-        <p>{{ $question->content }}</p>
-        <small>Posté par {{ $question->user->name }}</small>
+<a href="{{ route('questions.show', $question->id) }}" style="text-decoration: none; color: inherit;">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>{{ $question->title }}</h5>
+            <p>{{ $question->content }}</p>
+            <small>Posté par {{ $question->user->name }}</small>
+        </div>
     </div>
-</div>
-
-<form method="POST" action="{{ route('responses.create')}}">
-    @csrf
-    <input type="hidden" value="{{ $question->id }}" name="question_id">
-    <textarea name="content" id=""></textarea>
-    <input type="submit" value="envoyer reponse">
-</form>
+</a>
 
 <form method="POST" action="{{ route('questions.favorite', $question->id) }}">
     @csrf

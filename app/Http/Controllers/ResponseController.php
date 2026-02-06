@@ -9,22 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class ResponseController extends Controller
 {
-   
-    public function create(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-            'content'=> 'required|string',
-            ]
-        );
-        
-        Response::create(
-            [
-            'question_id'=>$request->question_id,
-            'content'=>$request->content,
-            'user_id'=>Auth::id()
-            ]
-            
-        );
+            'content' => 'required|string',
+            'question_id' => 'required|exists:questions,id'
+        ]);
 
-        return redirect()->route('questions.index');
+        Response::create([
+            'content' => $request->content,
+            'question_id' => $request->question_id,
+            'user_id' => Auth::id()
+        ]);
+
+        return back(); 
     }
 }

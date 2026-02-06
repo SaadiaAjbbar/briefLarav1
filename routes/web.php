@@ -24,9 +24,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 });
-//createResp
-Route::post('/createResp',[ResponseController::class,'create'])->name('responses.create');
+
 
 Route::post('/questions/{id}/favorite', [FavoriteController::class, 'toggle'])
     ->middleware('auth')
     ->name('questions.favorite');
+
+Route::get('/questions/{question}', [QuestionController::class, 'show'])
+    ->name('questions.show');
+//createResp
+Route::post('/responses', [ResponseController::class, 'store'])->name('responses.store');
+
+
+Route::middleware(['auth','Admin'])->group(function () {
+});
